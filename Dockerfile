@@ -10,12 +10,12 @@ ENV HOST oracle-database
 ENV PORT 1521
 ENV SID XE
 ENV HTTP_PORT 8080
-ENV APEX_VERSION 5.0.2
+ENV APEX_VERSION 5.0.4
 
 RUN apt-get update && apt-get -y install libaio1 unzip && apt-get clean && rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/*
 
 ADD instantclient-* /tmp/
-ADD apex* /apex_5.0.2/
+ADD apex* /apex_5.0.4/
 ADD entrypoint.sh /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]

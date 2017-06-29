@@ -62,7 +62,6 @@ apex_upgrade(){
 unzip_apex(){
 	echo "Extracting Apex-${APEX_VERSION}"
 	cat /apex_${APEX_VERSION}/apex_${APEX_VERSION}.zip-aa > /tmp/apex.zip
-	cat /apex_${APEX_VERSION}/apex_${APEX_VERSION}.zip-ab >> /tmp/apex.zip
 	rm -rf /u01/app/oracle/apex
 	unzip /tmp/apex.zip -d /u01/app/oracle/
 	rm -f /tmp/apex.zip
