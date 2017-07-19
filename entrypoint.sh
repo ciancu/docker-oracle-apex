@@ -65,6 +65,9 @@ unzip_apex(){
 	rm -rf /u01/app/oracle/apex
 	unzip /tmp/apex.zip -d /u01/app/oracle/
 	rm -f /tmp/apex.zip
+	cat /apex_${APEX_VERSION}/apex_${APEX_VERSION}.zip-bb > /tmp/apex.zip
+	unzip /tmp/apex.zip -d /u01/app/oracle/
+	rm -f /tmp/apex.zip
 }
 
 
