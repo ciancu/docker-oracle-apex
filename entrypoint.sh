@@ -54,9 +54,12 @@ apex_upgrade(){
 	$SQLPLUS -S $SQLPLUS_ARGS @apexins SYSAUX SYSAUX TEMP /i/ < /dev/null
 	echo "Updating apex images"
 	$SQLPLUS -S $SQLPLUS_ARGS @apxldimg.sql /u01/app/oracle < /dev/null
+	echo "Updating apex de language"
+	export NLS_LANG=German_Germany.AL32UTF8
+	$SQLPLUS -S $SQLPLUS_ARGS @load_de.sql /u01/app/oracle/builder/de < /dev/null
 	#Cleanup after run
-	cd /
-	rm -rf /u01/app/oracle/apex
+	#cd /
+	#rm -rf /u01/app/oracle/apex
 }
 
 unzip_apex(){
