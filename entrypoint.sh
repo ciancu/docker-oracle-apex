@@ -41,36 +41,17 @@ get_oracle_home(){
 	echo "ORACLE_HOME found: $ORACLE_HOME"
 }
 
-apex_epg_config(){
-	cd /u01/app/oracle/apex
-	#get_oracle_home
-	echo "Setting up EPG for Apex by running: @apex_epg_config $ORACLE_HOME"
-	$SQLPLUS -S $SQLPLUS_ARGS @apex_epg_config /u01/app/oracle < /dev/null
-}
-
 apex_upgrade(){
-	cd /u01/app/oracle/apex
+	cd /tmp/apex_patch_${APEX_PATCH}/patch/
 	echo "Upgrading apex..."
-	$SQLPLUS -S $SQLPLUS_ARGS @apexins SYSAUX SYSAUX TEMP /i/ < /dev/null
+	$SQLPLUS -S $SQLPLUS_ARGS @apxpatch.sql < /dev/null
 	echo "Updating apex images"
-	$SQLPLUS -S $SQLPLUS_ARGS @apxldimg.sql /u01/app/oracle < /dev/null
-	echo "Updating apex de language"
-	export NLS_LANG=German_Germany.AL32UTF8
-	$SQLPLUS -S $SQLPLUS_ARGS @load_de.sql /u01/app/oracle/builder/de < /dev/null
-	#Cleanup after run
-	#cd /
-	#rm -rf /u01/app/oracle/apex
+	$SQLPLUS -S $SQLPLUS_ARGS @apxldimg.sql /tmp/apex_patch_${APEX_PATCH}/patch/ < /dev/null
 }
 
 unzip_apex(){
-	echo "Extracting Apex-${APEX_VERSION}"
-	cat /apex_${APEX_VERSION}/apex_${APEX_VERSION}.zip-aa > /tmp/apex.zip
-	rm -rf /u01/app/oracle/apex
-	unzip /tmp/apex.zip -d /u01/app/oracle/
-	rm -f /tmp/apex.zip
-	cat /apex_${APEX_VERSION}/apex_${APEX_VERSION}.zip-bb > /tmp/apex.zip
-	unzip /tmp/apex.zip -d /u01/app/oracle/
-	rm -f /tmp/apex.zip
+	echo "Extracting Apex patch-${APEX_PATCH}"
+	unzip /apex_patch/p${APEX_PATCH}_Generic.zip -d /tmp/apex_patch_${APEX_PATCH}/
 }
 
 
@@ -80,7 +61,6 @@ case $1 in
 		unzip_apex
 		disable_http
 		apex_upgrade
-		apex_epg_config
 		enable_http
 		;;
 	*)
