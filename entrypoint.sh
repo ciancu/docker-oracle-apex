@@ -46,7 +46,7 @@ apex_upgrade(){
 	echo "Upgrading apex..."
 	$SQLPLUS -S $SQLPLUS_ARGS @apxpatch.sql < /dev/null
 	echo "Updating apex images"
-	$SQLPLUS -S $SQLPLUS_ARGS @apxldimg.sql /tmp/apex_patch_${APEX_PATCH}/patch/ < /dev/null
+	$SQLPLUS -S $SQLPLUS_ARGS @apxldimg.sql /tmp/apex_patch_${APEX_PATCH}/patch < /dev/null
 }
 
 unzip_apex(){
