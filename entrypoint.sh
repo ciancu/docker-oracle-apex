@@ -50,6 +50,7 @@ apex_epg_config(){
 
 apex_upgrade(){
 	cd /u01/app/oracle/apex
+	$SQLPLUS -S $SQLPLUS_ARGS @apxremov.sql< /dev/null
 	echo "Upgrading apex..."
 	$SQLPLUS -S $SQLPLUS_ARGS @apexins SYSAUX SYSAUX TEMP /i/ < /dev/null
 	echo "Updating apex images"
